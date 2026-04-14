@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaia Rillosi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f4f5f7; --white:#fff; --charcoal:#1c1e24; --ink:#2a2d35;
+    --mid:#6c707a; --light:#b8bcc6; --border:#dde0e6;
+    --accent:#4a6fa5; --accent-light:#7ba3d4; --accent-pale:#e8eef6;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:22px 56px;background:rgba(244,245,247,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:padding .4s}
+  nav.scrolled{padding:14px 56px}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;letter-spacing:.1em;color:var(--ink);text-decoration:none}
+  .nav-logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .25s}
+  .nav-links a:hover{color:var(--accent)}
+
+  #hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:72px}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px 56px}
+  .hero-eyebrow{font-size:.62rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
+  .hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,5.5vw,6rem);font-weight:300;line-height:1;color:var(--charcoal);margin-bottom:10px}
+  .hero-name em{font-style:italic;color:var(--accent)}
+  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--mid);margin-bottom:36px;line-height:1.6}
+  .hero-desc{font-size:.79rem;font-weight:300;line-height:1.95;color:var(--mid);max-width:400px;margin-bottom:48px}
+  .hero-cta{display:flex;gap:20px;align-items:center}
+  .btn-primary{display:inline-block;padding:13px 34px;background:var(--accent);color:#fff;font-size:.63rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:background .3s,transform .2s}
+  .btn-primary:hover{background:var(--charcoal);transform:translateY(-1px)}
+  .btn-ghost{display:inline-block;font-size:.63rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--light);padding-bottom:3px;transition:color .25s,border-color .25s}
+  .btn-ghost:hover{color:var(--accent);border-color:var(--accent)}
+  .hero-right{position:relative;background:var(--white);overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;width:100%;height:100%}
+  .hero-grid-item{overflow:hidden;background:#dde2ea}
+  .hero-grid-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(10%);transition:transform .8s,filter .4s}
+  .hero-grid-item:hover img{transform:scale(1.05);filter:grayscale(0%)}
+  .hero-grid-item:first-child{grid-row:span 2}
+
+  section{padding:100px 56px}
+  .section-label{font-size:.6rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.8vw,3.4rem);font-weight:300;color:var(--charcoal);line-height:1.1;margin-bottom:22px}
+  .section-title em{font-style:italic;color:var(--accent)}
+  .divider{width:48px;height:1px;background:var(--accent);margin-bottom:48px}
+
+  #about{background:var(--charcoal);color:var(--white);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  #about .section-title{color:var(--white)}
+  #about .section-label{color:var(--accent-light)}
+  #about .divider{background:var(--accent-light)}
+  .about-text{font-size:.83rem;font-weight:300;line-height:2;color:rgba(255,255,255,.65);margin-bottom:28px}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:44px}
+  .stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--accent-light);line-height:1}
+  .stat-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:6px}
+  .about-skills{padding:40px;border:1px solid rgba(122,163,212,.2);background:rgba(255,255,255,.03)}
+  .skill-group{margin-bottom:28px}
+  .skill-group:last-child{margin-bottom:0}
+  .skill-group-title{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent-light);margin-bottom:12px}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+  .skill-tag{font-size:.67rem;color:rgba(255,255,255,.55);border:1px solid rgba(122,163,212,.25);padding:5px 13px;transition:border-color .25s,color .25s}
+  .skill-tag:hover{border-color:var(--accent-light);color:var(--accent-light)}
+
+  #portfolio{background:var(--white)}
+  .portfolio-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+  .portfolio-filters{display:flex;gap:4px;flex-wrap:wrap}
+  .filter-btn{font-size:.6rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);background:none;border:1px solid var(--border);padding:8px 14px;cursor:pointer;transition:all .25s}
+  .filter-btn.active,.filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .project-list{display:flex;flex-direction:column}
+  .project-row{display:grid;grid-template-columns:52px 1fr auto 80px 24px;align-items:center;gap:28px;padding:24px 0;border-bottom:1px solid var(--border);cursor:pointer;position:relative;transition:background .2s,padding-left .2s}
+  .project-row:first-child{border-top:1px solid var(--border)}
+  .project-row::after{content:'';position:absolute;left:0;bottom:-1px;width:0;height:2px;background:var(--accent);transition:width .35s cubic-bezier(.25,.46,.45,.94)}
+  .project-row:hover::after{width:100%}
+  .project-row:hover{background:var(--accent-pale);padding-left:8px}
+  .project-num{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:var(--light);text-align:right;transition:color .25s;user-select:none}
+  .project-row:hover .project-num{color:var(--accent)}
+  .project-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;color:var(--charcoal);line-height:1.15;margin-bottom:3px;transition:color .25s}
+  .project-row:hover .project-title{color:var(--accent)}
+  .project-subtitle{font-size:.67rem;font-weight:400;color:var(--mid);letter-spacing:.03em}
+  .project-category{font-size:.55rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);background:var(--accent-pale);padding:4px 10px;white-space:nowrap}
+  .project-year{font-size:.67rem;color:var(--light);white-space:nowrap;font-weight:300;text-align:right}
+  .project-arrow{font-size:1rem;color:var(--light);transition:transform .25s,color .25s}
+  .project-row:hover .project-arrow{transform:translateX(4px);color:var(--accent)}
+  .project-group-label{padding:20px 0 8px 0;font-size:.58rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--light);border-bottom:none}
+
+  #experience{background:var(--bg);display:grid;grid-template-columns:1fr 1.5fr;gap:80px}
+  .experience-list{display:flex;flex-direction:column}
+  .exp-item{padding:26px 0;border-bottom:1px solid var(--border);position:relative;transition:padding-left .3s}
+  .exp-item:first-child{border-top:1px solid var(--border)}
+  .exp-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:top;transition:transform .3s}
+  .exp-item:hover::before{transform:scaleY(1)}
+  .exp-item:hover{padding-left:16px}
+  .exp-meta{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+  .exp-role{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500;color:var(--charcoal)}
+  .exp-date{font-size:.6rem;font-weight:500;letter-spacing:.12em;color:var(--accent);white-space:nowrap;margin-left:12px}
+  .exp-company{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:10px}
+  .exp-desc{font-size:.77rem;font-weight:300;line-height:1.8;color:var(--mid)}
+  .experience-right{display:flex;flex-direction:column;gap:36px;justify-content:center}
+  .edu-block{padding:32px 36px;background:var(--white);border-left:3px solid var(--accent)}
+  .edu-badge{font-size:.57rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .edu-school{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--charcoal);margin-bottom:6px}
+  .edu-degree{font-size:.74rem;color:var(--mid);margin-bottom:14px;line-height:1.6}
+  .edu-gpa{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--accent)}
+  .edu-gpa span{font-size:.68rem;font-family:'Montserrat',sans-serif;color:var(--mid);vertical-align:middle;margin-left:8px}
+
+  #hobbies{background:var(--bg)}
+  .hobbies-intro{max-width:560px;font-size:.82rem;font-weight:300;line-height:1.9;color:var(--mid);margin-bottom:64px}
+  .hobbies-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
+  .hobby-card{display:flex;flex-direction:column}
+  .hobby-photo{width:100%;aspect-ratio:3/4;background:var(--white);overflow:hidden;position:relative;margin-bottom:16px;border:1px solid var(--border)}
+  .hobby-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s;filter:grayscale(8%)}
+  .hobby-card:hover .hobby-photo img{transform:scale(1.05);filter:grayscale(0%)}
+  .hobby-photo video{width:100%;height:100%;object-fit:cover;display:block}
+  .hobby-photo-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--accent-pale) 0%,var(--bg) 100%);flex-direction:column;gap:10px}
+  .hobby-photo-placeholder-label{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-light);text-align:center;padding:0 12px}
+  .hobby-photo-placeholder-hint{font-size:.58rem;color:var(--light);text-align:center;padding:0 10px}
+  .hobby-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--charcoal);margin-bottom:4px}
+  .hobby-detail{font-size:.67rem;font-weight:300;color:var(--mid);line-height:1.6}
+  .hobby-stat{display:inline-block;margin-top:8px;font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-pale);padding:3px 10px}
+
+  #contact{background:var(--charcoal);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  #contact .section-title{color:var(--white);font-size:clamp(2rem,3.2vw,3.8rem)}
+  #contact .section-label{color:var(--accent-light)}
+  #contact .divider{background:var(--accent-light)}
+  .contact-intro{font-size:.81rem;font-weight:300;line-height:2;color:rgba(255,255,255,.55);margin-bottom:40px}
+  .contact-links{display:flex;flex-direction:column;gap:12px}
+  .contact-link{display:flex;align-items:center;gap:20px;text-decoration:none;padding:18px 22px;border:1px solid rgba(122,163,212,.18);transition:border-color .25s,background .25s}
+  .contact-link:hover{border-color:var(--accent-light);background:rgba(122,163,212,.08)}
+  .contact-link-icon{width:34px;height:34px;border:1px solid rgba(122,163,212,.3);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--accent-light);flex-shrink:0}
+  .contact-link-label{font-size:.57rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:3px}
+  .contact-link-value{font-size:.8rem;font-weight:300;color:var(--white)}
+  .contact-right-visual{display:flex;flex-direction:column;gap:3px;height:460px}
+  .cv-visual-row{display:flex;gap:3px;flex:1}
+  .cv-visual-block{flex:1;background:rgba(122,163,212,.07);border:1px solid rgba(122,163,212,.1);display:flex;align-items:center;justify-content:center;transition:background .25s}
+  .cv-visual-block:hover{background:rgba(122,163,212,.15)}
+  .cv-visual-block-text{font-family:'Cormorant Garamond',serif;font-size:.85rem;font-style:italic;color:rgba(122,163,212,.45);text-align:center;padding:10px}
+
+  footer{background:#13151a;padding:28px 56px;display:flex;justify-content:space-between;align-items:center}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;color:rgba(255,255,255,.3);letter-spacing:.1em}
+  .footer-copy{font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.1em}
+
+  /* ── GALLERY LIGHTBOX ── */
+  .lightbox{position:fixed;inset:0;z-index:200;background:rgba(20,22,28,.97);display:none;flex-direction:column;align-items:center;justify-content:center}
+  .lightbox.active{display:flex}
+
+  .lb-close{position:absolute;top:24px;right:32px;font-size:.63rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;background:none;border:none;transition:color .2s;z-index:10}
+  .lb-close:hover{color:#fff}
+
+  .lb-main{display:flex;align-items:center;gap:20px;width:100%;max-width:1100px;padding:0 24px;justify-content:center}
+
+  .lb-arrow{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);font-size:1.2rem;width:44px;height:44px;cursor:pointer;flex-shrink:0;transition:border-color .2s,color .2s;display:flex;align-items:center;justify-content:center}
+  .lb-arrow:hover{border-color:var(--accent-light);color:#fff}
+  .lb-arrow:disabled{opacity:.2;cursor:default}
+
+  .lb-img-wrap{flex:1;max-height:72vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .lb-img-wrap img{max-width:100%;max-height:72vh;object-fit:contain;display:block}
+
+  .lb-bottom{text-align:center;padding:20px 24px 0;width:100%;max-width:1100px}
+  .lb-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#fff;margin-bottom:6px}
+  .lb-meta{font-size:.63rem;letter-spacing:.15em;color:var(--accent-light);margin-bottom:8px}
+  .lb-desc{font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:640px;margin:0 auto 12px}
+  .lb-counter{font-size:.6rem;letter-spacing:.15em;color:rgba(255,255,255,.25)}
+
+  .lb-dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+  .lb-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.2);border:none;cursor:pointer;transition:background .2s;padding:0}
+  .lb-dot.active{background:var(--accent-light)}
+
+  /* no-image state */
+  .lb-no-image{width:480px;height:320px;border:1px dashed rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  .lb-no-image-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.25)}
+  .lb-no-image-hint{font-size:.7rem;color:rgba(255,255,255,.15);font-family:'Cormorant Garamond',serif;font-style:italic}
+
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:900px){
+    nav{padding:18px 24px}
+    nav.scrolled{padding:12px 24px}
+    .nav-links{gap:16px}
+    section{padding:64px 24px}
+    #hero{grid-template-columns:1fr}
+    .hero-right{height:55vw}
+    .hero-left{padding:60px 24px}
+    #about{grid-template-columns:1fr}
+    #experience{grid-template-columns:1fr}
+    #contact{grid-template-columns:1fr}
+    .project-row{grid-template-columns:40px 1fr auto 24px;gap:14px}
+    .project-year{display:none}
+    .hobbies-grid{grid-template-columns:repeat(2,1fr)}
+    footer{flex-direction:column;gap:10px;text-align:center}
+    .lb-main{gap:10px;padding:0 12px}
+    .lb-arrow{width:36px;height:36px;font-size:1rem}
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Gaia <span>Rillosi</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#hobbies">Hobbies</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Architecture · Design · Technology</p>
+    <h1 class="hero-name">Gaia<br><em>Rillosi</em></h1>
+    <p class="hero-tagline">Bridging spatial thinking<br>with computational precision.</p>
+    <p class="hero-desc">Architecture student at NYU studying Computer Science with minors in Business, Construction Management, and Urban Design. Fluent in both pencil and code — from freehand sketches of Trajan's Column to SolidWorks fabrication models.</p>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid">
+      <div class="hero-grid-item"><img src="hero1.jpg" alt="Set build" onerror="this.style.display='none'"></div>
+      <div class="hero-grid-item"><img src="hero2.jpg" alt="Drawing" onerror="this.style.display='none'"></div>
+      <div class="hero-grid-item"><img src="hero3.jpg" alt="Portfolio work" onerror="this.style.display='none'"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="fade-up">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Where Art<br>Meets <em>Architecture</em></h2>
+    <div class="divider"></div>
+    <p class="about-text">I'm a dual-background designer with roots at SCAD's architecture program and now pursuing Computer Science at NYU — because I believe the future of design lives at the intersection of spatial intuition and technical craft.</p>
+    <p class="about-text">From building full theatrical sets for Chicago and Les Miserables, to designing infrastructure for Union Square market vendors, to producing stop-motion animation — my work spans every scale and medium.</p>
+    <div class="about-stats">
+      <div><div class="stat-num">4.0</div><div class="stat-label">GPA at SCAD</div></div>
+      <div><div class="stat-num">3.6</div><div class="stat-label">GPA at NYU</div></div>
+      <div><div class="stat-num">11</div><div class="stat-label">Portfolio Projects</div></div>
+      <div><div class="stat-num">4</div><div class="stat-label">Disciplines</div></div>
+    </div>
+  </div>
+  <div class="about-skills fade-up">
+    <div class="skill-group">
+      <div class="skill-group-title">CAD &amp; 3D Modeling</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SolidWorks</span><span class="skill-tag">AutoCAD</span>
+        <span class="skill-tag">3D Scanning</span><span class="skill-tag">Mesh Processing</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Programming</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span><span class="skill-tag">C++</span>
+        <span class="skill-tag">C</span><span class="skill-tag">Java</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Drawing &amp; Fabrication</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Freehand Sketching</span><span class="skill-tag">Charcoal</span>
+        <span class="skill-tag">Graphite</span><span class="skill-tag">Stop-Motion</span>
+        <span class="skill-tag">Structural Models</span><span class="skill-tag">Set Construction</span>
+        <span class="skill-tag">Scaled Models</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">English (Fluent)</span><span class="skill-tag">Italian (Fluent)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="portfolio-header fade-up">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="section-title">Portfolio</h2>
+    </div>
+    <div class="portfolio-filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="drawing">Drawings</button>
+      <button class="filter-btn" data-filter="build">Builds</button>
+      <button class="filter-btn" data-filter="miniature">Miniature</button>
+      <button class="filter-btn" data-filter="casestudy">Case Study</button>
+    </div>
+  </div>
+
+  <!--
+  ============================================================
+  HOW TO ADD PHOTOS TO A PROJECT:
+  1. Put your image files in the same folder as index.html
+  2. Find the project row below and add a data-images attribute
+  3. List filenames separated by commas, like this:
+     data-images="expressive-1.jpg,expressive-2.jpg"
+  4. You can add as many images as you want per project
+  ============================================================
+  -->
+
+  <div class="project-list fade-up">
+    <div class="project-group-label">&#8212;&#8194;Analytical Drawings</div>
+
+    <div class="project-row" data-category="drawing"
+         data-title="Expressive Interior" data-year="Fall 2023" data-medium="Graphite Pencils"
+         data-desc="Individual work for DRAW100 at SCAD. Two-point perspective studies exploring depth, light, and spatial composition of closed environments."
+         data-images="expressive-1.jpg,expressive-2.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">01</div>
+      <div class="project-main"><div class="project-title">Expressive Interior</div><div class="project-subtitle">Graphite Pencils &nbsp;·&nbsp; DRAW100, SCAD</div></div>
+      <div class="project-category">Drawing</div>
+      <div class="project-year">Fall 2023</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="drawing"
+         data-title="Maxi &amp; Mini-Immersion" data-year="Fall 2023" data-medium="Charcoal"
+         data-desc="DRAW100 at SCAD. A series of four charcoal studies analyzing volumes, value, and composition — working at both large and small scales simultaneously."
+         data-images="maxi-mini-1.jpg,maxi-mini-2.jpg,maxi-mini-3.jpg,maxi-mini-4.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">02</div>
+      <div class="project-main"><div class="project-title">Maxi &amp; Mini-Immersion</div><div class="project-subtitle">Charcoal &nbsp;·&nbsp; DRAW100, SCAD</div></div>
+      <div class="project-category">Drawing</div>
+      <div class="project-year">Fall 2023</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="drawing"
+         data-title="Spheres: Volume + Shading" data-year="Fall 2023" data-medium="Charcoal and Graphite Pencils"
+         data-desc="Individual work for SCAD Drawing 101. Fundamental studies in three-dimensional form, light, shadow, and tonal gradation using charcoal and graphite."
+         data-images="spheres-1.jpg,spheres-2.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">03</div>
+      <div class="project-main"><div class="project-title">Spheres: Volume + Shading</div><div class="project-subtitle">Charcoal &amp; Graphite &nbsp;·&nbsp; Drawing 101, SCAD</div></div>
+      <div class="project-category">Drawing</div>
+      <div class="project-year">Fall 2023</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="drawing"
+         data-title="Freehand Sketching — Rome &amp; London" data-year="Winter 2024" data-medium="Graphite Pencils, Micron Pens"
+         data-desc="On-location freehand studies for Graphics for the Building Arts 115 at SCAD: Trajan's Column in Rome (photographed by me), a dining room interior perspective, and the Old War Office Building in London."
+         data-images="sketching-rome-1.jpg,sketching-rome-2.jpg,sketching-rome-3.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">04</div>
+      <div class="project-main"><div class="project-title">Freehand Sketching — Rome &amp; London</div><div class="project-subtitle">Graphite &amp; Micron Pens &nbsp;·&nbsp; Building Arts 115, SCAD</div></div>
+      <div class="project-category">Drawing</div>
+      <div class="project-year">Winter 2024</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="drawing"
+         data-title="Freehand Sketching — New York City" data-year="Fall 2024" data-medium="Graphite Pencils"
+         data-desc="Individual work for NYU History of Architecture. On-site drawings of three landmark New York buildings: the Church of St. Francis Xavier, Washington Square Arch, and the Cooper Union Foundation Building."
+         data-images="sketching-nyc-1.jpg,sketching-nyc-2.jpg,sketching-nyc-3.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">05</div>
+      <div class="project-main"><div class="project-title">Freehand Sketching — New York City</div><div class="project-subtitle">Graphite Pencils &nbsp;·&nbsp; History of Architecture, NYU</div></div>
+      <div class="project-category">Drawing</div>
+      <div class="project-year">Fall 2024</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-group-label">&#8212;&#8194;Large Scale Builds</div>
+
+    <div class="project-row" data-category="build"
+         data-title="Chicago: The Musical" data-year="Spring 2023" data-medium="Wood, Paint, LED Lights"
+         data-desc="Large-scale collaborative set build for Dobbs Ferry High School. Participated in building, painting, and dressing this full theatrical set complete with LED lighting."
+         data-images="chicago-1.jpg,chicago-2.jpg,chicago-3.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">06</div>
+      <div class="project-main"><div class="project-title">Chicago: The Musical</div><div class="project-subtitle">Wood, Paint, LED Lights &nbsp;·&nbsp; Dobbs Ferry High School</div></div>
+      <div class="project-category">Large Scale Build</div>
+      <div class="project-year">Spring 2023</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="build"
+         data-title="Les Miserables" data-year="Spring 2022" data-medium="Wood, Paint, Fabric"
+         data-desc="Full theatrical set construction for Les Miserables at Dobbs Ferry High School. Built, painted, and dressed the complete multi-level set with wood, paint, and fabric."
+         data-images="lesmis-1.jpg,lesmis-2.jpg,lesmis-3.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">07</div>
+      <div class="project-main"><div class="project-title">Les Miserables</div><div class="project-subtitle">Wood, Paint, Fabric &nbsp;·&nbsp; Dobbs Ferry High School</div></div>
+      <div class="project-category">Large Scale Build</div>
+      <div class="project-year">Spring 2022</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="build"
+         data-title="Peter Pan: The Musical" data-year="Fall 2019" data-medium="Wood, Paint"
+         data-desc="Full set construction for Peter Pan at Dobbs Ferry Middle School — building, painting, and set dressing. One of my earliest large-scale collaborative builds."
+         data-images="peterpan-1.jpg,peterpan-2.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">08</div>
+      <div class="project-main"><div class="project-title">Peter Pan: The Musical</div><div class="project-subtitle">Wood, Paint &nbsp;·&nbsp; Dobbs Ferry Middle School</div></div>
+      <div class="project-category">Large Scale Build</div>
+      <div class="project-year">Fall 2019</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-group-label">&#8212;&#8194;Miniature Build</div>
+
+    <div class="project-row" data-category="miniature"
+         data-title="I'm Ready Now" data-year="2022" data-medium="Stop-Motion Animation"
+         data-desc="An independently produced stop-motion animation short film. Handcrafted miniature sets, puppets, and props — a personal passion project exploring narrative through miniature worlds. Watch at youtube.com/watch?v=v0xGQAcK7pY"
+         data-images="readynow-1.jpg,readynow-2.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">09</div>
+      <div class="project-main"><div class="project-title">I'm Ready Now</div><div class="project-subtitle">Stop-Motion Animation &nbsp;·&nbsp; Independent Project</div></div>
+      <div class="project-category">Miniature</div>
+      <div class="project-year">2022</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-group-label">&#8212;&#8194;Case Studies</div>
+
+    <div class="project-row" data-category="casestudy"
+         data-title="Le Petit Cabanon — Case Study" data-year="Winter 2024" data-medium="Graphite Pencils"
+         data-desc="Comprehensive case study of Le Corbusier's Le Petit Cabanon for Graphics of the Building Arts 115 at SCAD. Includes 1/2-inch scale floor plan, section, elevations, plan oblique exploded projection, entourage sketch, and perspective projection."
+         data-images="cabanon-1.jpg,cabanon-2.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">10</div>
+      <div class="project-main"><div class="project-title">Le Petit Cabanon</div><div class="project-subtitle">Le Corbusier Case Study &nbsp;·&nbsp; Graphite Pencils &nbsp;·&nbsp; Building Arts 115, SCAD</div></div>
+      <div class="project-category">Case Study</div>
+      <div class="project-year">Winter 2024</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+
+    <div class="project-row" data-category="casestudy"
+         data-title="Union Square — Union Commons" data-year="Fall 2025" data-medium="Graphite, Watercolor, Scaled Model"
+         data-desc="Full design research project for NYU Architecture in Context. Thesis: Union Square is nothing without its people. Phase 1: spatial argument through analytical drawings and diagrams. Phase 2: design solution — Union Commons, a dedicated infrastructure hub for market vendors with ground floor plan, top floor plan, site plan, three elevations, and a scaled physical model."
+         data-images="unionsq-1.jpg,unionsq-2.jpg,unionsq-3.jpg,unionsq-4.jpg,unionsq-5.jpg"
+         onclick="openLightbox(this)">
+      <div class="project-num">11</div>
+      <div class="project-main"><div class="project-title">Union Square — Union Commons</div><div class="project-subtitle">Spatial Argument + Design Solution &nbsp;·&nbsp; Architecture in Context, NYU</div></div>
+      <div class="project-category">Case Study</div>
+      <div class="project-year">Fall 2025</div>
+      <div class="project-arrow">&#8594;</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="fade-up">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Experience &amp;<br><em>Education</em></h2>
+    <div class="divider"></div>
+    <div class="experience-list">
+      <div class="exp-item">
+        <div class="exp-meta"><div class="exp-role">Junior Executive Assistant</div><div class="exp-date">Jul 2025 – Present</div></div>
+        <div class="exp-company">Extravega Milano SRL — Milan, Italy</div>
+        <div class="exp-desc">Partnered with CEO on architectural fabrication and project execution. Researched 3D scanning and mesh processing techniques; produced SolidWorks models; conducted site visits and participated in client meetings.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-meta"><div class="exp-role">Construction Management Team</div><div class="exp-date">Sep 2025 – Present</div></div>
+        <div class="exp-company">Earthquake Engineering Research Institute — New York, NY</div>
+        <div class="exp-desc">Designed and built a balsa wood structural model to withstand seismic loads. Collaborated in multidisciplinary team analyzing structural performance under simulated earthquake conditions.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-meta"><div class="exp-role">Marketing &amp; Sales Consultant</div><div class="exp-date">Dec 2025 – Present</div></div>
+        <div class="exp-company">Studio Pilates — New York, NY</div>
+        <div class="exp-desc">Lead generation, sales outreach, customer data analysis, and campaign performance optimization to improve marketing strategy and conversion rates.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-meta"><div class="exp-role">Head Waitress</div><div class="exp-date">Sep 2023 – Jun 2024</div></div>
+        <div class="exp-company">Frali Gourmet — Savannah, Georgia</div>
+        <div class="exp-desc">Managed table assignments to optimize seating capacity and guest experience. Delivered efficient service in a high-volume environment, resolved customer issues under pressure, and handled cash and POS transactions accurately.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-meta"><div class="exp-role">Coach</div><div class="exp-date">Mar 2021 – 2025</div></div>
+        <div class="exp-company">Robert Jacobson Sports — Ardsley, NY</div>
+        <div class="exp-desc">Mentored student-athletes, led structured training sessions, and promoted accountability through consistent feedback in high-pressure settings.</div>
+      </div>
+    </div>
+  </div>
+  <div class="experience-right fade-up">
+    <div class="edu-block">
+      <div class="edu-badge">Current · 2024–2027</div>
+      <div class="edu-school">New York University</div>
+      <div class="edu-degree">B.A. Computer Science<br>Minors: Business Studies · Construction Management · Urban Design &amp; Architectural Studies</div>
+      <div class="edu-gpa">3.6 <span>/ 4.0 GPA</span></div>
+    </div>
+    <div class="edu-block">
+      <div class="edu-badge">Dean's List · 2023–2024</div>
+      <div class="edu-school">Savannah College<br>of Art and Design</div>
+      <div class="edu-degree">B.A. Architecture<br>Savannah, Georgia</div>
+      <div class="edu-gpa">4.0 <span>/ 4.0 GPA</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="hobbies">
+  <div class="fade-up">
+    <p class="section-label">Beyond the Studio</p>
+    <h2 class="section-title">Hobbies &amp;<br><em>Interests</em></h2>
+    <div class="divider"></div>
+    <p class="hobbies-intro">When I'm not at a desk or on a job site, I'm moving. I believe physical discipline and creative discipline feed each other — whether that's crossing a finish line or finishing a crochet project.</p>
+  </div>
+  <div class="hobbies-grid fade-up">
+    <div class="hobby-card">
+      <div class="hobby-photo">
+        <img src="running.jpg" alt="Running" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="hobby-photo-placeholder" style="display:none"><div class="hobby-photo-placeholder-label">Running</div><div class="hobby-photo-placeholder-hint">Add running.jpg</div></div>
+      </div>
+      <div class="hobby-name">Running</div>
+      <div class="hobby-detail">Long-distance runner with many races to come. If your body does hard things, your mind can do anything.</div>
+      <span class="hobby-stat">3 Halfs · 1 Full</span>
+    </div>
+    <div class="hobby-card">
+      <div class="hobby-photo">
+        <img src="crochet.jpg" alt="Crochet" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="hobby-photo-placeholder" style="display:none"><div class="hobby-photo-placeholder-label">Crochet</div><div class="hobby-photo-placeholder-hint">Add crochet.jpg</div></div>
+      </div>
+      <div class="hobby-name">Crochet</div>
+      <div class="hobby-detail">Handcraft as a counterpoint to screens — pattern, texture, and making something from nothing, just like architecture and coding.</div>
+    </div>
+    <div class="hobby-card">
+      <div class="hobby-photo">
+        <video src="lifting.mp4" autoplay muted loop playsinline onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"></video>
+        <div class="hobby-photo-placeholder" style="display:none"><div class="hobby-photo-placeholder-label">Lifting</div><div class="hobby-photo-placeholder-hint">Add lifting.mp4</div></div>
+      </div>
+      <div class="hobby-name">Lifting</div>
+      <div class="hobby-detail">Strength training as structure and routine — discipline that carries over into everything else.</div>
+    </div>
+    <div class="hobby-card">
+      <div class="hobby-photo">
+        <video src="calisthenics.mp4" autoplay muted loop playsinline onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"></video>
+        <div class="hobby-photo-placeholder" style="display:none"><div class="hobby-photo-placeholder-label">Calisthenics</div><div class="hobby-photo-placeholder-hint">Add calisthenics.mp4</div></div>
+      </div>
+      <div class="hobby-name">Calisthenics</div>
+      <div class="hobby-detail">Bodyweight movement and control — strength, balance, and spatial awareness all at once.</div>
+    </div>
+    <div class="hobby-card">
+      <div class="hobby-photo">
+        <video src="volleyball.mp4" autoplay muted loop playsinline onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"></video>
+        <div class="hobby-photo-placeholder" style="display:none"><div class="hobby-photo-placeholder-label">Volleyball</div><div class="hobby-photo-placeholder-hint">Add volleyball.mp4</div></div>
+      </div>
+      <div class="hobby-name">Volleyball</div>
+      <div class="hobby-detail">Team sport, quick thinking, and a love for the game — on court whenever possible.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Let's Work<br><em>Together</em></h2>
+    <div class="divider"></div>
+    <p class="contact-intro">Whether you're looking for a designer who codes, a builder who draws, or a collaborator who bridges multiple disciplines — I'd love to connect.</p>
+    <div class="contact-links">
+      <a href="mailto:gr2444@nyu.edu" class="contact-link">
+        <div class="contact-link-icon">&#9993;</div>
+        <div><div class="contact-link-label">Email (NYU)</div><div class="contact-link-value">gr2444@nyu.edu</div></div>
+      </a>
+      <a href="mailto:gaiarillosi2027@gmail.com" class="contact-link">
+        <div class="contact-link-icon">&#9993;</div>
+        <div><div class="contact-link-label">Email (Personal)</div><div class="contact-link-value">gaiarillosi2027@gmail.com</div></div>
+      </a>
+      <a href="tel:+19175760062" class="contact-link">
+        <div class="contact-link-icon">&#9742;</div>
+        <div><div class="contact-link-label">Phone</div><div class="contact-link-value">(917) 576-0062</div></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=v0xGQAcK7pY" target="_blank" class="contact-link">
+        <div class="contact-link-icon">&#9654;</div>
+        <div><div class="contact-link-label">Animation Project</div><div class="contact-link-value">I'm Ready Now — YouTube</div></div>
+      </a>
+    </div>
+  </div>
+  <div class="contact-right-visual fade-up">
+    <div class="cv-visual-row">
+      <div class="cv-visual-block"><div class="cv-visual-block-text">Architecture</div></div>
+      <div class="cv-visual-block" style="flex:2"><div class="cv-visual-block-text">Computer Science</div></div>
+    </div>
+    <div class="cv-visual-row">
+      <div class="cv-visual-block" style="flex:2"><div class="cv-visual-block-text">Urban Design</div></div>
+      <div class="cv-visual-block"><div class="cv-visual-block-text">Business</div></div>
+    </div>
+    <div class="cv-visual-row">
+      <div class="cv-visual-block"><div class="cv-visual-block-text">Construction</div></div>
+      <div class="cv-visual-block"><div class="cv-visual-block-text">Milan · NYC · Savannah</div></div>
+      <div class="cv-visual-block"><div class="cv-visual-block-text">Bilingual</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Gaia Rillosi</div>
+  <div class="footer-copy">2026 · New York, NY</div>
+</footer>
+
+<!-- GALLERY LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">&#10005; Close</button>
+  <div class="lb-main">
+    <button class="lb-arrow" id="lb-prev" onclick="galleryNav(-1)">&#8592;</button>
+    <div class="lb-img-wrap" id="lb-img-wrap"></div>
+    <button class="lb-arrow" id="lb-next" onclick="galleryNav(1)">&#8594;</button>
+  </div>
+  <div class="lb-bottom">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-meta" id="lb-meta"></div>
+    <div class="lb-desc" id="lb-desc"></div>
+    <div class="lb-counter" id="lb-counter"></div>
+    <div class="lb-dots" id="lb-dots"></div>
+  </div>
+</div>
+
+<script>
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry, i) {
+    if (entry.isIntersecting) {
+      setTimeout(function() { entry.target.classList.add('visible'); }, i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
+
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var filter = btn.dataset.filter;
+    document.querySelectorAll('.project-row').forEach(function(item) {
+      item.style.display = (filter === 'all' || item.dataset.category === filter) ? '' : 'none';
+    });
+    document.querySelectorAll('.project-group-label').forEach(function(label) {
+      label.style.display = filter === 'all' ? '' : 'none';
+    });
+  });
+});
+
+// Gallery state
+var gallery = { images: [], index: 0 };
+
+function openLightbox(el) {
+  var raw = (el.dataset.images || '').trim();
+  gallery.images = raw ? raw.split(',').map(function(s){ return s.trim(); }) : [];
+  gallery.index = 0;
+
+  document.getElementById('lb-title').textContent = el.dataset.title || '';
+  document.getElementById('lb-meta').textContent = [el.dataset.year, el.dataset.medium].filter(Boolean).join(' · ');
+  document.getElementById('lb-desc').textContent = el.dataset.desc || '';
+
+  renderGallery();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderGallery() {
+  var wrap = document.getElementById('lb-img-wrap');
+  var dots = document.getElementById('lb-dots');
+  var counter = document.getElementById('lb-counter');
+  var total = gallery.images.length;
+  var i = gallery.index;
+
+  wrap.innerHTML = '';
+  dots.innerHTML = '';
+
+  if (total === 0) {
+    wrap.innerHTML = '<div class="lb-no-image"><div class="lb-no-image-label">No images yet</div><div class="lb-no-image-hint">Add filenames to data-images on this project row</div></div>';
+    counter.textContent = '';
+  } else {
+    var img = document.createElement('img');
+    img.src = gallery.images[i];
+    img.alt = 'Project image ' + (i + 1);
+    wrap.appendChild(img);
+    counter.textContent = (i + 1) + ' / ' + total;
+
+    for (var d = 0; d < total; d++) {
+      var dot = document.createElement('button');
+      dot.className = 'lb-dot' + (d === i ? ' active' : '');
+      dot.setAttribute('data-idx', d);
+      dot.onclick = function() { gallery.index = parseInt(this.getAttribute('data-idx')); renderGallery(); };
+      dots.appendChild(dot);
+    }
+  }
+
+  document.getElementById('lb-prev').disabled = (total === 0 || i === 0);
+  document.getElementById('lb-next').disabled = (total === 0 || i === total - 1);
+}
+
+function galleryNav(dir) {
+  var total = gallery.images.length;
+  gallery.index = Math.max(0, Math.min(total - 1, gallery.index + dir));
+  renderGallery();
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') galleryNav(-1);
+  if (e.key === 'ArrowRight') galleryNav(1);
+});
+</script>
+</body>
+</html>
